@@ -13,7 +13,6 @@ body {
 }
 
 h1 {
-  font-family: 'Poppins', sans-serif;
   font-weight: 700;
   color: #006957;
   text-align: center;
@@ -118,14 +117,31 @@ h1 {
   box-shadow: none;
 }
 
-/* Aprobado */
+/* Aprobado (estilo general + específico por ciclo) */
 .ramo.aprobado {
-  background: linear-gradient(145deg, #d1bee7, #b695d3) !important;
-  color: #4a148c !important;
-  border-color: #6a1b9a !important;
   text-decoration: line-through;
   font-style: italic;
-  box-shadow: 4px 4px 8px #8a69a2, -4px -4px 8px #c6aee1;
+}
+
+.ramo.aprobado.basico {
+  background-color: #c4d4d1 !important;
+  color: #00483d !important;
+  border-color: #00483d !important;
+  box-shadow: 4px 4px 8px #8aa9a4, -4px -4px 8px #dfe5e4;
+}
+
+.ramo.aprobado.intermedio {
+  background-color: #cce7f4 !important;
+  color: #0078a4 !important;
+  border-color: #0078a4 !important;
+  box-shadow: 4px 4px 8px #9dcde3, -4px -4px 8px #e8f4fb;
+}
+
+.ramo.aprobado.avanzado {
+  background-color: #d4e6cc !important;
+  color: #4e8645 !important;
+  border-color: #4e8645 !important;
+  box-shadow: 4px 4px 8px #9ec39a, -4px -4px 8px #e8f4e3;
 }
 
 /* === RESPONSIVE === */
