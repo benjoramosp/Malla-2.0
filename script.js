@@ -19,7 +19,7 @@ function crearMalla() {
     const divSemestre = document.createElement('div');
     divSemestre.classList.add('semestre');
 
-    // Asignar clase de ciclo
+    // Asignar clase de ciclo según el semestre
     if (semestre <= 4) divSemestre.classList.add('basico');
     else if (semestre <= 10) divSemestre.classList.add('intermedio');
     else divSemestre.classList.add('avanzado');
@@ -39,7 +39,6 @@ function crearMalla() {
         }
 
         divRamo.textContent = nombre;
-
         divRamo.addEventListener('click', aprobar);
         divSemestre.appendChild(divRamo);
       }
@@ -65,10 +64,8 @@ function actualizarDesbloqueos() {
     if (!elemento.classList.contains('aprobado')) {
       if (cumpleRequisitos) {
         elemento.classList.remove('bloqueado');
-        elemento.classList.add('activo');
       } else {
         elemento.classList.add('bloqueado');
-        elemento.classList.remove('activo');
       }
     } else {
       elemento.classList.remove('bloqueado');
