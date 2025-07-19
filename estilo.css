@@ -1,4 +1,4 @@
-/* === RESET GENERAL === */
+//* === RESET GENERAL === */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -13,149 +13,147 @@ body {
 }
 
 h1 {
-  font-weight: 700;
-  color: #006957;
   text-align: center;
   margin-bottom: 40px;
+  font-size: 2rem;
+  color: #222;
 }
 
-/* === CONTENEDOR DE LA MALLA === */
+/* === CONTENEDOR DE LA LÍNEA DE TIEMPO === */
 .linea-tiempo {
   display: flex;
   gap: 30px;
   overflow-x: auto;
   padding: 10px 0;
   scroll-behavior: smooth;
-  justify-content: flex-start;
 }
 
-.semestre.basico h3 {
-  border-bottom: 1px solid #006957;
-  color: #006957;
-}
-.semestre.intermedio h3 {
-  border-bottom: 1px solid #00A9DC;
-  color: #00A9DC;
-}
-.semestre.avanzado h3 {
-  border-bottom: 1px solid #6FB065;
-  color: #6FB065;
-}
-
-
-/* === SEMESTRES SEGÚN CICLO === */
+/* === CADA SEMESTRE === */
 .semestre {
-  min-width: 260px;
+  flex: 0 0 260px;
+  display: flex;
+  flex-direction: column;
   border-radius: 10px;
-  padding: 15px;
+  padding: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  border: 2px solid transparent;
+  min-height: 350px;
+  transition: transform 0.3s ease;
 }
 
-.semestre.basico {
+.semestre:hover {
+  transform: scale(1.01);
+}
+
+/* === FONDOS DE SEMESTRES SEGÚN NÚMERO === */
+.semestre-1, .semestre-2, .semestre-3, .semestre-4 {
   background-color: #E8EDEB;
-  border-color: #006957;
 }
 
-.semestre.intermedio {
+.semestre-5, .semestre-6, .semestre-7, .semestre-8,
+.semestre-9, .semestre-10 {
   background-color: #EEF7FD;
-  border-color: #00A9DC;
 }
 
-.semestre.avanzado {
+.semestre-11, .semestre-12, .semestre-13, .semestre-14 {
   background-color: #ECF3E9;
-  border-color: #6FB065;
 }
 
+/* === TÍTULO DEL SEMESTRE === */
 .semestre h3 {
+  margin: -12px -12px 12px -12px;
+  padding: 10px;
   text-align: center;
   font-size: 1.1rem;
-  margin-bottom: 12px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 6px;
-  color: #333;
+  font-weight: bold;
+  border-radius: 10px 10px 0 0;
+  color: inherit;
+  background-color: inherit;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
-
-/* === RAMOS === */
+/* === RAMO (CUADROS) === */
 .ramo {
-  border: 1px solid;
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 10px;
+  background-color: #fff;
+  border: 2px solid transparent;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: bold;
   text-align: center;
   cursor: pointer;
-  font-weight: 600;
   user-select: none;
-  transition: all 0.3s ease;
-  box-shadow: 4px 4px 8px rgba(0,0,0,0.1), -4px -4px 8px rgba(255,255,255,0.6);
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Colores por ciclo */
+/* === ESTADOS DE LOS RAMOS === */
+.ramo.bloqueado {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.ramo.activo {
+  cursor: pointer;
+}
+
+/* === RAMO APROBADO === */
+.ramo.aprobado {
+  position: relative;
+}
+
+/* Línea tachada en diagonal */
+.ramo.aprobado::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.4);
+  transform: rotate(-45deg);
+  transform-origin: center;
+  pointer-events: none;
+}
+
+/* === RAMO APROBADO SEGÚN CICLO === */
+.ramo.aprobado.basico {
+  background-color: #c4d4d1;
+  color: #00483d;
+  border-color: #00483d;
+}
+
+.ramo.aprobado.intermedio {
+  background-color: #cce7f4;
+  color: #0078a4;
+  border-color: #0078a4;
+}
+
+.ramo.aprobado.avanzado {
+  background-color: #d4e6cc;
+  color: #4e8645;
+  border-color: #4e8645;
+}
+
+/* === COLORES DE LOS RAMOS POR CICLO === */
 .ramo.basico {
-  background-color: #E8EDEB;
   border-color: #006957;
+  background-color: #E8EDEB;
   color: #006957;
 }
 
 .ramo.intermedio {
-  background-color: #EEF7FD;
   border-color: #00A9DC;
+  background-color: #EEF7FD;
   color: #00A9DC;
 }
 
 .ramo.avanzado {
-  background-color: #ECF3E9;
   border-color: #6FB065;
+  background-color: #ECF3E9;
   color: #6FB065;
-}
-
-/* Hover */
-.ramo:hover {
-  transform: translateY(-3px);
-  filter: brightness(0.95);
-  box-shadow: 6px 6px 10px rgba(0,0,0,0.1), -6px -6px 10px rgba(255,255,255,0.6);
-}
-
-/* Active */
-.ramo:active {
-  transform: translateY(1px);
-  box-shadow: inset 3px 3px 5px rgba(0,0,0,0.1), inset -3px -3px 5px rgba(255,255,255,0.6);
-}
-
-/* Bloqueado */
-.ramo.bloqueado {
-  background: none;
-  color: #aaa;
-  border: 1px dashed #bbb;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-/* Aprobado (estilo general + específico por ciclo) */
-.ramo.aprobado {
-  text-decoration: line-through;
-  font-style: italic;
-}
-
-.ramo.aprobado.basico {
-  background-color: #c4d4d1 !important;
-  color: #00483d !important;
-  border-color: #00483d !important;
-  box-shadow: 4px 4px 8px #8aa9a4, -4px -4px 8px #dfe5e4;
-}
-
-.ramo.aprobado.intermedio {
-  background-color: #cce7f4 !important;
-  color: #0078a4 !important;
-  border-color: #0078a4 !important;
-  box-shadow: 4px 4px 8px #9dcde3, -4px -4px 8px #e8f4fb;
-}
-
-.ramo.aprobado.avanzado {
-  background-color: #d4e6cc !important;
-  color: #4e8645 !important;
-  border-color: #4e8645 !important;
-  box-shadow: 4px 4px 8px #9ec39a, -4px -4px 8px #e8f4e3;
 }
 
 /* === RESPONSIVE === */
