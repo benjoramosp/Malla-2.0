@@ -2,22 +2,23 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Malla Interactiva Medicina USS</title>
-  <link rel="stylesheet" href="estilos.css" />
+  <link rel="stylesheet" href="./estilos.css" />
+
+  <!-- Fuente opcional (Poppins) si usas estilos modernos -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
   <h1>Malla Interactiva Medicina USS</h1>
 
-  <!-- Contenedor principal de la línea de tiempo -->
-  <div class="linea-tiempo">
-    <!-- Aquí se insertan los semestres y ramos dinámicamente -->
+  <!-- Línea de tiempo con los semestres -->
+  <div class="linea-tiempo" id="contenedor-malla">
+    <!-- Los semestres y ramos se insertan dinámicamente aquí -->
   </div>
 
-  <!-- Scripts -->
-  <script src="ramos.js"></script>
-  <script src="script.js"></script>
-
+  <!-- Scripts: primero ramos.js, luego script.js -->
+  <script src="./ramos.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>
