@@ -9,95 +9,121 @@ function guardarAprobados(aprobados) {
   localStorage.setItem('mallaAprobados', JSON.stringify(aprobados));
 }
 
-// ==== CREAR LA MALLA ====
+// ==== CREAR SEMESTRES ====
 
-function crearMalla() {
-  const lineaTiempo = document.querySelector('.linea-tiempo');
-  if (!lineaTiempo) return;
+function crearSemestres() {
+  const contenedor = document.querySelector(".linea-tiempo");
+  for (let i = 1; i <= 14; i++) {
+    const div = document.createElement("div");
+    div.className = `semestre semestre-${i}`;
 
-  const aprobados = obtenerAprobados();
+    // Ciclo visual
+    if (i <= 4) div.classList.add("basico");
+    else if (i <= 10) div.classList.add("intermedio");
+    else div.classList.add("avanzado");
 
-  for (let semestre = 1; semestre <= 14; semestre++) {
-    const divSemestre = document.createElement('div');
-    divSemestre.classList.add('semestre');
-
-    // Asignar clase de ciclo
-    if (semestre <= 4) divSemestre.classList.add('basico');
-    else if (semestre <= 10) divSemestre.classList.add('intermedio');
-    else divSemestre.classList.add('avanzado');
-
-    const h3 = document.createElement('h3');
-    h3.textContent = `Semestre ${semestre}`;
-    divSemestre.appendChild(h3);
-
-    for (const [nombre, datos] of Object.entries(ramos)) {
-      if (datos.semestre === semestre) {
-        const divRamo = document.createElement('div');
-        divRamo.classList.add('ramo', datos.ciclo);
-        divRamo.id = nombre;
-        divRamo.textContent = nombre;
-
-        if (aprobados.includes(nombre)) {
-          divRamo.classList.add('aprobado');
-        }
-
-        divRamo.addEventListener('click', manejarAprobacion);
-        divSemestre.appendChild(divRamo);
-      }
-    }
-
-    lineaTiempo.appendChild(divSemestre);
-  }
-
-  actualizarDesbloqueos();
-}
-
-// ==== ACTUALIZAR DESBLOQUEOS ====
-
-function actualizarDesbloqueos() {
-  const aprobados = obtenerAprobados();
-
-  for (const [nombre, datos] of Object.entries(ramos)) {
-    const elemento = document.getElementById(nombre);
-    if (!elemento) continue;
-
-    const requisitos = datos.requisitos || [];
-    const desbloqueado = requisitos.every(req => aprobados.includes(req));
-
-    if (!elemento.classList.contains('aprobado')) {
-      if (desbloqueado) {
-        elemento.classList.remove('bloqueado');
-      } else {
-        elemento.classList.add('bloqueado');
-      }
-    } else {
-      elemento.classList.remove('bloqueado');
-    }
+    const h3 = document.createElement("h3");
+    h3.textContent = `Semestre ${i}`;
+    div.appendChild(h3);
+    contenedor.appendChild(div);
   }
 }
 
-// ==== MANEJAR APROBACIÓN ====
+// ==== CREAR RAMO ====
 
-function manejarAprobacion(e) {
-  const ramo = e.currentTarget;
-  if (ramo.classList.contains('bloqueado')) return;
+function crearRamo(nombre, datos) {
+  const div = document.createElement("div");
+  div.className = `ramo bloqueado ${datos.ciclo}`;
+  div.textContent = nombre;
+  div.dataset.nombre = nombre;
+  div.dataset.estado = "bloqueado";
+  div.id = nombre;
 
-  ramo.classList.toggle('aprobado');
+  const col = document.querySelector(`.semestre-${datos.semestre}`);
+  if (col) col.appendChild(div);
+}
+
+// ==== DESBLOQUEAR ====
+
+function desbloquear(nombre) {
+  const div = document.querySelector(`.ramo[data-nombre="${nombre}"]`);
+  if (!div || div.dataset.estado !== "bloqueado") return;
+
+  const requisitos = ramos[nombre].requisitos || [];
+  const cumple = requisitos.every(req => {
+    const elem = document.querySelector(`.ramo[data-nombre="${req}"]`);
+    return elem && elem.dataset.estado === "aprobado";
+  });
+
+  if (cumple) {
+    div.classList.remove("bloqueado");
+    div.classList.add("activo");
+    div.dataset.estado = "activo";
+
+    div.addEventListener("click", () => manejarAprobacion(div));
+  }
+}
+
+// ==== MANEJAR APROBACIÓN Y DESAPROBACIÓN ====
+
+function manejarAprobacion(div) {
+  const nombre = div.dataset.nombre;
+  const estado = div.dataset.estado;
+
+  if (estado === "bloqueado") return;
 
   const aprobados = obtenerAprobados();
-  const nombre = ramo.id;
+  const yaAprobado = aprobados.includes(nombre);
 
-  if (ramo.classList.contains('aprobado')) {
-    if (!aprobados.includes(nombre)) aprobados.push(nombre);
+  if (yaAprobado) {
+    // Desaprobar
+    div.classList.remove("aprobado");
+    div.dataset.estado = "activo";
+    guardarAprobados(aprobados.filter(r => r !== nombre));
   } else {
-    const index = aprobados.indexOf(nombre);
-    if (index > -1) aprobados.splice(index, 1);
+    // Aprobar
+    div.classList.remove("activo");
+    div.classList.add("aprobado");
+    div.dataset.estado = "aprobado";
+    guardarAprobados([...aprobados, nombre]);
+
+    // Desbloquear los que abre
+    (ramos[nombre].abre || []).forEach(desbloquear);
   }
 
-  guardarAprobados(aprobados);
-  actualizarDesbloqueos();
+  // Clonar para evitar listeners duplicados
+  const clon = div.cloneNode(true);
+  clon.addEventListener("click", () => manejarAprobacion(clon));
+  div.parentNode.replaceChild(clon, div);
 }
 
-// ==== INICIALIZACIÓN ====
+// ==== CARGAR ESTADO GUARDADO Y DESBLOQUEAR ====
 
-document.addEventListener('DOMContentLoaded', crearMalla);
+function cargarEstado() {
+  const aprobados = obtenerAprobados();
+
+  aprobados.forEach(nombre => {
+    const div = document.querySelector(`.ramo[data-nombre="${nombre}"]`);
+    if (div) {
+      div.classList.remove("bloqueado", "activo");
+      div.classList.add("aprobado");
+      div.dataset.estado = "aprobado";
+
+      // Desbloquear lo que abre
+      (ramos[nombre].abre || []).forEach(desbloquear);
+    }
+  });
+}
+
+// ==== INICIALIZAR ====
+
+document.addEventListener("DOMContentLoaded", () => {
+  crearSemestres();
+  Object.entries(ramos).forEach(([nombre, datos]) => crearRamo(nombre, datos));
+  cargarEstado();
+
+  Object.entries(ramos).forEach(([nombre, datos]) => {
+    const requisitos = datos.requisitos || [];
+    if (requisitos.length === 0) desbloquear(nombre);
+  });
+});
