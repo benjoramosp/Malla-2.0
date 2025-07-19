@@ -1,0 +1,140 @@
+/* === RESET GENERAL === */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* === ESTILO GENERAL === */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: #006957;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* === CONTENEDOR DE LA MALLA === */
+.linea-tiempo {
+  display: flex;
+  gap: 30px;
+  overflow-x: auto;
+  padding: 10px 0;
+  scroll-behavior: smooth;
+  justify-content: flex-start;
+}
+
+/* === SEMESTRES SEGÚN CICLO === */
+.semestre {
+  min-width: 260px;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+}
+
+.semestre.basico {
+  background-color: #E8EDEB;
+  border-color: #006957;
+}
+
+.semestre.intermedio {
+  background-color: #EEF7FD;
+  border-color: #00A9DC;
+}
+
+.semestre.avanzado {
+  background-color: #ECF3E9;
+  border-color: #6FB065;
+}
+
+.semestre h3 {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 6px;
+  color: #333;
+}
+
+/* === RAMOS === */
+.ramo {
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+  user-select: none;
+  transition: all 0.3s ease;
+  box-shadow: 4px 4px 8px rgba(0,0,0,0.1), -4px -4px 8px rgba(255,255,255,0.6);
+}
+
+/* Colores por ciclo */
+.ramo.basico {
+  background-color: #E8EDEB;
+  border-color: #006957;
+  color: #006957;
+}
+
+.ramo.intermedio {
+  background-color: #EEF7FD;
+  border-color: #00A9DC;
+  color: #00A9DC;
+}
+
+.ramo.avanzado {
+  background-color: #ECF3E9;
+  border-color: #6FB065;
+  color: #6FB065;
+}
+
+/* Hover */
+.ramo:hover {
+  transform: translateY(-3px);
+  filter: brightness(0.95);
+  box-shadow: 6px 6px 10px rgba(0,0,0,0.1), -6px -6px 10px rgba(255,255,255,0.6);
+}
+
+/* Active */
+.ramo:active {
+  transform: translateY(1px);
+  box-shadow: inset 3px 3px 5px rgba(0,0,0,0.1), inset -3px -3px 5px rgba(255,255,255,0.6);
+}
+
+/* Bloqueado */
+.ramo.bloqueado {
+  background: none;
+  color: #aaa;
+  border: 1px dashed #bbb;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Aprobado */
+.ramo.aprobado {
+  background: linear-gradient(145deg, #d1bee7, #b695d3) !important;
+  color: #4a148c !important;
+  border-color: #6a1b9a !important;
+  text-decoration: line-through;
+  font-style: italic;
+  box-shadow: 4px 4px 8px #8a69a2, -4px -4px 8px #c6aee1;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1200px) {
+  .linea-tiempo {
+    overflow-x: auto;
+  }
+
+  .semestre {
+    min-width: 220px;
+  }
+}
