@@ -29,6 +29,20 @@ h1 {
   justify-content: flex-start;
 }
 
+.semestre.basico h3 {
+  border-bottom: 1px solid #006957;
+  color: #006957;
+}
+.semestre.intermedio h3 {
+  border-bottom: 1px solid #00A9DC;
+  color: #00A9DC;
+}
+.semestre.avanzado h3 {
+  border-bottom: 1px solid #6FB065;
+  color: #6FB065;
+}
+
+
 /* === SEMESTRES SEGÚN CICLO === */
 .semestre {
   min-width: 260px;
