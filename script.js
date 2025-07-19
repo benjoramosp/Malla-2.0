@@ -1,4 +1,4 @@
-// ==== FUNCIONES PARA LOCALSTORAGE ====
+// ==== GESTIÓN DE LOCALSTORAGE ====
 
 function obtenerAprobados() {
   const data = localStorage.getItem('mallaAprobados');
@@ -9,17 +9,19 @@ function guardarAprobados(aprobados) {
   localStorage.setItem('mallaAprobados', JSON.stringify(aprobados));
 }
 
-// ==== FUNCIÓN PARA CREAR LA MALLA ====
+// ==== CREAR LA MALLA ====
 
 function crearMalla() {
   const lineaTiempo = document.querySelector('.linea-tiempo');
+  if (!lineaTiempo) return;
+
   const aprobados = obtenerAprobados();
 
   for (let semestre = 1; semestre <= 14; semestre++) {
     const divSemestre = document.createElement('div');
     divSemestre.classList.add('semestre');
 
-    // Asignar clase de ciclo según el semestre
+    // Asignar clase de ciclo
     if (semestre <= 4) divSemestre.classList.add('basico');
     else if (semestre <= 10) divSemestre.classList.add('intermedio');
     else divSemestre.classList.add('avanzado');
@@ -33,13 +35,13 @@ function crearMalla() {
         const divRamo = document.createElement('div');
         divRamo.classList.add('ramo', datos.ciclo);
         divRamo.id = nombre;
+        divRamo.textContent = nombre;
 
         if (aprobados.includes(nombre)) {
           divRamo.classList.add('aprobado');
         }
 
-        divRamo.textContent = nombre;
-        divRamo.addEventListener('click', aprobar);
+        divRamo.addEventListener('click', manejarAprobacion);
         divSemestre.appendChild(divRamo);
       }
     }
@@ -50,7 +52,7 @@ function crearMalla() {
   actualizarDesbloqueos();
 }
 
-// ==== FUNCIÓN PARA ACTUALIZAR DESBLOQUEOS ====
+// ==== ACTUALIZAR DESBLOQUEOS ====
 
 function actualizarDesbloqueos() {
   const aprobados = obtenerAprobados();
@@ -59,10 +61,11 @@ function actualizarDesbloqueos() {
     const elemento = document.getElementById(nombre);
     if (!elemento) continue;
 
-    const cumpleRequisitos = (datos.requisitos || []).every(r => aprobados.includes(r));
+    const requisitos = datos.requisitos || [];
+    const desbloqueado = requisitos.every(req => aprobados.includes(req));
 
     if (!elemento.classList.contains('aprobado')) {
-      if (cumpleRequisitos) {
+      if (desbloqueado) {
         elemento.classList.remove('bloqueado');
       } else {
         elemento.classList.add('bloqueado');
@@ -73,30 +76,28 @@ function actualizarDesbloqueos() {
   }
 }
 
-// ==== FUNCIÓN PARA APROBAR O DESAPROBAR ====
+// ==== MANEJAR APROBACIÓN ====
 
-function aprobar(e) {
+function manejarAprobacion(e) {
   const ramo = e.currentTarget;
   if (ramo.classList.contains('bloqueado')) return;
 
   ramo.classList.toggle('aprobado');
 
   const aprobados = obtenerAprobados();
-  const id = ramo.id;
+  const nombre = ramo.id;
 
   if (ramo.classList.contains('aprobado')) {
-    if (!aprobados.includes(id)) aprobados.push(id);
+    if (!aprobados.includes(nombre)) aprobados.push(nombre);
   } else {
-    const idx = aprobados.indexOf(id);
-    if (idx > -1) aprobados.splice(idx, 1);
+    const index = aprobados.indexOf(nombre);
+    if (index > -1) aprobados.splice(index, 1);
   }
 
   guardarAprobados(aprobados);
   actualizarDesbloqueos();
 }
 
-// ==== INICIALIZAR ====
+// ==== INICIALIZACIÓN ====
 
-window.addEventListener('DOMContentLoaded', () => {
-  crearMalla();
-});
+document.addEventListener('DOMContentLoaded', crearMalla);
