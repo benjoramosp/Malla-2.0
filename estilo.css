@@ -156,6 +156,20 @@ h1 {
   color: #6FB065;
 }
 
+#btnReiniciar {
+  padding: 10px 20px;
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#btnReiniciar:hover {
+  background-color: #b71c1c;
+}
 /* === RESPONSIVE === */
 @media (max-width: 1200px) {
   .linea-tiempo {
