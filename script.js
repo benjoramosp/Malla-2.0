@@ -115,6 +115,16 @@ function cargarEstado() {
   });
 }
 
+
+function actualizarEstadisticas() {
+  const aprobados = obtenerAprobados();
+  const totalRamos = Object.keys(ramos).length;
+  const porcentaje = totalRamos === 0 ? 0 : Math.round((aprobados.length / totalRamos) * 100);
+
+  const estadisticas = document.getElementById('estadisticas');
+  estadisticas.textContent = `Ramos aprobados: ${aprobados.length} / ${totalRamos} (${porcentaje}%)`;
+}
+
 // ==== INICIALIZAR ====
 
 document.addEventListener("DOMContentLoaded", () => {
