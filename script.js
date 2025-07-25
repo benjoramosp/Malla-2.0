@@ -167,6 +167,19 @@ document.getElementById('btnReiniciar').addEventListener('click', () => {
   }
 });
 
+// ==== TOGGLE DARK MODE ====
+document.getElementById("toggleTheme").addEventListener("click", () => {
+  const isDark = document.body.classList.toggle("dark");
+  localStorage.setItem("modoOscuro", isDark ? "true" : "false");
+});
+
+// ==== CARGAR TEMA DESDE LOCALSTORAGE ====
+document.addEventListener("DOMContentLoaded", () => {
+  if (localStorage.getItem("modoOscuro") === "true") {
+    document.body.classList.add("dark");
+  }
+});
+
 // ==== INICIALIZAR ====
 
 document.addEventListener("DOMContentLoaded", () => {
