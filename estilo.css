@@ -170,6 +170,38 @@ h1 {
 #btnReiniciar:hover {
   background-color: #b71c1c;
 }
+
+body.dark {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+body.dark h1 {
+  color: #f0f0f0;
+}
+
+body.dark .semestre {
+  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
+}
+
+body.dark .semestre h3 {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark .ramo {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.05);
+}
+
+body.dark .ramo.aprobado::after {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+body.dark .ramo.bloqueado {
+  opacity: 0.3;
+}
+
 /* === RESPONSIVE === */
 @media (max-width: 1200px) {
   .linea-tiempo {
