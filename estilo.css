@@ -70,6 +70,7 @@ h1 {
   background-color: inherit;
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
+
 /* === RAMO (CUADROS) === */
 .ramo {
   background-color: #fff;
@@ -156,21 +157,18 @@ h1 {
   color: #6FB065;
 }
 
-#btnReiniciar {
-  padding: 10px 20px;
-  background-color: #d32f2f;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+/* === RESPONSIVE === */
+@media (max-width: 1200px) {
+  .linea-tiempo {
+    overflow-x: auto;
+  }
+
+  .semestre {
+    min-width: 220px;
+  }
 }
 
-#btnReiniciar:hover {
-  background-color: #b71c1c;
-}
-
+/* === MODO OSCURO === */
 body.dark {
   background-color: #121212;
   color: #f0f0f0;
@@ -200,15 +198,4 @@ body.dark .ramo.aprobado::after {
 
 body.dark .ramo.bloqueado {
   opacity: 0.3;
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 1200px) {
-  .linea-tiempo {
-    overflow-x: auto;
-  }
-
-  .semestre {
-    min-width: 220px;
-  }
 }
