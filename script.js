@@ -135,13 +135,34 @@ function actualizarResumen() {
   if (totalElem) totalElem.textContent = total;
   if (aprobElem) aprobElem.textContent = aprobados;
   if (porceElem) porceElem.textContent = `${porcentaje}%`;
+
+  lanzarConfetiSiCompleto(); // 🎉 Confeti si está completo
 }
 
+// ==== 🎉 LANZAR CONFETI AL COMPLETAR ====
+
+function lanzarConfetiSiCompleto() {
+  const total = Object.keys(ramos).length;
+  const aprobados = obtenerAprobados().length;
+  const yaCelebrado = localStorage.getItem('confetiLanzado');
+
+  if (aprobados === total && !yaCelebrado) {
+    confetti({
+      particleCount: 150,
+      spread: 100,
+      origin: { y: 0.6 },
+    });
+
+    localStorage.setItem('confetiLanzado', 'true');
+  }
+}
 
 // ==== BOTÓN REINICIAR ====
+
 document.getElementById('btnReiniciar').addEventListener('click', () => {
   if (confirm('¿Estás seguro que deseas reiniciar la malla? Se borrará tu progreso.')) {
     localStorage.removeItem('mallaAprobados');
+    localStorage.removeItem('confetiLanzado');
     location.reload();
   }
 });
