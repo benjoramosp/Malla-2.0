@@ -199,3 +199,65 @@ body.dark .ramo.aprobado::after {
 body.dark .ramo.bloqueado {
   opacity: 0.3;
 }
+
+/* === FONDOS DE SEMESTRES EN MODO OSCURO === */
+body.dark .semestre-1,
+body.dark .semestre-2,
+body.dark .semestre-3,
+body.dark .semestre-4 {
+  background-color: #1f2b28;
+}
+
+body.dark .semestre-5,
+body.dark .semestre-6,
+body.dark .semestre-7,
+body.dark .semestre-8,
+body.dark .semestre-9,
+body.dark .semestre-10 {
+  background-color: #1e2c35;
+}
+
+body.dark .semestre-11,
+body.dark .semestre-12,
+body.dark .semestre-13,
+body.dark .semestre-14 {
+  background-color: #1f2e24;
+}
+
+/* === RAMOS EN MODO OSCURO POR CICLO === */
+body.dark .ramo.basico {
+  background-color: #1f2b28;
+  border-color: #48b4a1;
+  color: #48b4a1;
+}
+
+body.dark .ramo.intermedio {
+  background-color: #1e2c35;
+  border-color: #3ab0e2;
+  color: #3ab0e2;
+}
+
+body.dark .ramo.avanzado {
+  background-color: #1f2e24;
+  border-color: #76c574;
+  color: #76c574;
+}
+
+/* === RAMOS APROBADOS EN MODO OSCURO POR CICLO === */
+body.dark .ramo.aprobado.basico {
+  background-color: #39534f;
+  border-color: #7ff1d9;
+  color: #7ff1d9;
+}
+
+body.dark .ramo.aprobado.intermedio {
+  background-color: #3d5a6b;
+  border-color: #9bdcff;
+  color: #9bdcff;
+}
+
+body.dark .ramo.aprobado.avanzado {
+  background-color: #4b6341;
+  border-color: #a2f3a2;
+  color: #a2f3a2;
+}
